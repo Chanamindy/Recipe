@@ -1,5 +1,10 @@
 use RecipeWebsiteDB 
 go 
+delete recipeingredient
+delete recipedirection
+delete mealcourserecipe
+delete cookbookrecipe
+delete recipe
 
 ;
 with x as(
