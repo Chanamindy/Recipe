@@ -1,3 +1,5 @@
+using RecipeSystem;
+
 namespace RecipeTest
 {
     public class Tests
@@ -23,7 +25,8 @@ namespace RecipeTest
             DataTable dtdatedrafted = SQLUtility.GetDataTable("select datedrafted from recipe where recipeid = " + recipeid);
             DateTime datedrafted = (DateTime)dtdatedrafted.Rows[0]["DateDrafted"];
             TestContext.WriteLine("The datedrafted for the recipe with recipeid = " + recipeid + " is " + datedrafted);
-            //datedrafted = "2 - 2 - 2022";
+            string sdatedrafted = "1-2-2022";
+            DateTime.TryParse(sdatedrafted, out datedrafted);
             TestContext.WriteLine("Change the datedrafted to " + datedrafted);
 
             DataTable dt = Recipe.Load(recipeid);
@@ -75,12 +78,12 @@ namespace RecipeTest
         }
 
         [Test]
-        [TestCase("NewRecipe-5", 45, "2022-3-22")]
-        [TestCase("Chocolate Cake", 200, "2023-5-12")]
-        [TestCase("Vanilla Iced Coffee", 90, "2035-1-1")]
-        [TestCase("Pancake", 150, "2024-3-30")]
-        [TestCase("Ceasar Salad", 65, "2022-6-15")]
-        public void AddRecipe(string recipename, int calorie, DateTime datedrafted)
+        [TestCase("NewRecipe-5", "2022-3-22")]
+        [TestCase("Chocolate Cake", "2023-5-12")]
+        [TestCase("Vanilla Iced Coffee", "2023-1-1")]
+        [TestCase("Pancake", "2024-3-30")]
+        [TestCase("Ceasar Salad", "2022-6-15")]
+        public void AddRecipe(string recipename, DateTime datedrafted)
         {
             DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipeid = 0");
             DataRow r = dt.Rows.Add();
@@ -89,18 +92,23 @@ namespace RecipeTest
             Assume.That(cuisineid > 0, "There are no cuisines in the cuisine table, so can't run the test");
             int userstaffid = SQLUtility.GetFirstColumnFirstRowValue("select userstaffid from userstaff");
             Assume.That(userstaffid > 0, "There are no users in the userstaff table, so can't run the test");
-            TestContext.WriteLine("Add a recipe with the recipename, " + recipename);
+            int calorie = SQLUtility.GetFirstColumnFirstRowValue("select max(calorie) from Recipe");
+            calorie = calorie + 10;
+
+            TestContext.WriteLine("Add a recipe with the recipename, " + recipename + ", and calories = " + calorie);
             
             r["RecipeName"] = recipename;
             r["CuisineId"] = cuisineid;
             r["UserStaffId"] = userstaffid;
             r["Calorie"] = calorie;
             r["DateDrafted"] = datedrafted;
+
+            SQLUtility.DebugPrintDataTable(dt);
             Recipe.Save(dt);
 
-            int newrecipeid = SQLUtility.GetFirstColumnFirstRowValue("select * from recipe r where r.recipename = " + recipename.ToString());
-            Assert.That(newrecipeid > 0, "New recipe withe the recipename = " + recipename + " is not found in the database.");
-            TestContext.WriteLine("The recipe with the recipename = " + recipename + "was added to the database.");
+            int newrecipeid = SQLUtility.GetFirstColumnFirstRowValue("select * from recipe r where r.Calorie = " + calorie);
+            Assert.That(newrecipeid > 0, "New recipe with the calorie = " + calorie + " is not found in the database.");
+            TestContext.WriteLine("The recipe with the calorie = " + calorie + " was added to the database.");
         }
 
         [Test]
