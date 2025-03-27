@@ -23,7 +23,7 @@ namespace RecipeTest
             DataTable dtdatedrafted = SQLUtility.GetDataTable("select datedrafted from recipe where recipeid = " + recipeid);
             DateTime datedrafted = (DateTime)dtdatedrafted.Rows[0]["DateDrafted"];
             TestContext.WriteLine("The datedrafted for the recipe with recipeid = " + recipeid + " is " + datedrafted);
-            datedrafted = { 2 - 2 - 2022};
+            //datedrafted = "2 - 2 - 2022";
             TestContext.WriteLine("Change the datedrafted to " + datedrafted);
 
             DataTable dt = Recipe.Load(recipeid);
