@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CPUFramework;
 
 namespace RecipeSystem
@@ -47,6 +42,7 @@ namespace RecipeSystem
             return dt;
         }
 
+
         public static void Save(DataTable dtRecipe)
         {
             SQLUtility.DebugPrintDataTable(dtRecipe);
@@ -82,3 +78,5 @@ namespace RecipeSystem
         }
     }
 }
+
+//
