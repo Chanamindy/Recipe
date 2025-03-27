@@ -1,10 +1,11 @@
+
 use RecipeWebsiteDB	
 go
 
 create or alter procedure dbo.UserNameGet(@UserStaffId int = 0, @All bit = 0, @UserLastName varchar(30) = '')
 as
 begin
-	select us.UserStaffId, us.UserFirstName, us.UserLastName 
+	select us.UserStaffId, UserName = concat(us.UserFirstName, ' ', us.UserLastName), us.UserFirstName, us.UserLastName 
 	from UserStaff us
 	where us.UserStaffId = @UserStaffId
 	or @All = 1
@@ -12,6 +13,7 @@ begin
 	order by us.UserLastName
 end
 go
+
 
 /*
 execute dbo.UserNameGet --return no results
