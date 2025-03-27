@@ -21,9 +21,9 @@ namespace RecipeTest
             int recipeid = SQLUtility.GetFirstColumnFirstRowValue("select recipeid from recipe");
             Assume.That(recipeid > 0, "No recipes in the database, can't run the test.");
             DataTable dtdatedrafted = SQLUtility.GetDataTable("select datedrafted from recipe where recipeid = " + recipeid);
-            string datedrafted = dtdatedrafted.Rows[0]["DateDrafted"].ToString();
+            DateTime datedrafted = (DateTime)dtdatedrafted.Rows[0]["DateDrafted"];
             TestContext.WriteLine("The datedrafted for the recipe with recipeid = " + recipeid + " is " + datedrafted);
-            datedrafted = "02/02/2022 12:00:00 AM";
+            datedrafted = { 2 - 2 - 2022};
             TestContext.WriteLine("Change the datedrafted to " + datedrafted);
 
             DataTable dt = Recipe.Load(recipeid);
@@ -31,7 +31,7 @@ namespace RecipeTest
             Recipe.Save(dt);
 
             DataTable newdtdatedrafted = SQLUtility.GetDataTable("select datedrafted from recipe where recipeid = " + recipeid);
-            string newdatedrafted = newdtdatedrafted.Rows[0]["DateDrafted"].ToString();
+            DateTime newdatedrafted = (DateTime)newdtdatedrafted.Rows[0]["DateDrafted"];
             Assert.That(newdatedrafted == datedrafted, "The datedrafted for the recipe with the recipeid = " + recipeid + " wasn't changed to " + datedrafted);
             TestContext.WriteLine("The datedrafted for the recipe with the recipeid = " + recipeid + " was changed to " + datedrafted);
         }
@@ -75,10 +75,10 @@ namespace RecipeTest
         }
 
         [Test]
-        [TestCase("NewRecipe-5", 45, "2025-3-22")]
-        [TestCase("Chocolate Cake", 200, "2020-5-12")]
-        [TestCase("Vanilla Iced Coffee", 90, "2030-1-1")]
-        [TestCase("Pancake", 150, "2017-3-30")]
+        [TestCase("NewRecipe-5", 45, "2022-3-22")]
+        [TestCase("Chocolate Cake", 200, "2023-5-12")]
+        [TestCase("Vanilla Iced Coffee", 90, "2035-1-1")]
+        [TestCase("Pancake", 150, "2024-3-30")]
         [TestCase("Ceasar Salad", 65, "2022-6-15")]
         public void AddRecipe(string recipename, int calorie, DateTime datedrafted)
         {
@@ -103,23 +103,20 @@ namespace RecipeTest
             TestContext.WriteLine("The recipe with the recipename = " + recipename + "was added to the database.");
         }
 
-        ///Delete with no foreign key constraints
         [Test]
         public void DeleteRecipe()
         {
-            DataTable dt = SQLUtility.GetDataTable("select top 1 r.recipeid from recipe r left join cookbookrecipe cbr on r.recipeid = cbr.recipeid where cbr.recipeid is null");
+            DataTable dt = SQLUtility.GetDataTable("select top 1 recipeid from recipe");
             int recipeid = 0;
-            if (dt.Rows.Count > 0)
-            {
-                recipeid = (int)dt.Rows[0]["RecipeId"];
-            }
-            Assume.That(recipeid > 0, "There are no Recipes that are not in a cookbook");
+            recipeid = (int)dt.Rows[0]["RecipeId"];
+            Assume.That(recipeid > 0, "There are no Recipes in the Database, can't run test");
             TestContext.WriteLine("There is an existing recipe with a recipeid " + recipeid);
             TestContext.WriteLine("Ensure that the application can delete the recipe with recipeid = " + recipeid);
 
             Recipe.Delete(dt);
 
-            Assert.That(dt.Rows.Count == 0, "The app didn't delete the recipe with a recipeid = " + recipeid);
+            DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where recipeid = " + recipeid);
+            Assert.That(dtafterdelete.Rows.Count == 0, "The app didn't delete the recipe with a recipeid = " + recipeid);
             TestContext.WriteLine("The app deleted the recipe with a recipeid = " + recipeid);
         }
 
