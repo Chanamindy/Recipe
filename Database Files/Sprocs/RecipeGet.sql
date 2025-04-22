@@ -4,7 +4,7 @@ go
 create or alter procedure dbo.RecipeGet(@RecipeId int = 0, @All bit = 0, @RecipeName varchar(50) = '')
 as
 begin
-	select r.RecipeId, r.CuisineId, r.RecipeName, r.Calorie, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeStatus, r.RecipePictureCode 
+	select r.RecipeId, r.CuisineId, r.UserStaffId, r.RecipeName, r.Calorie, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeStatus, r.RecipePictureCode 
 	from Recipe r
 	where r.RecipeId = @RecipeId
 	or @All = 1
