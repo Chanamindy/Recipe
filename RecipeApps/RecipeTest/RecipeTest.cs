@@ -93,8 +93,10 @@ namespace RecipeTest
             Assume.That(userstaffid > 0, "There are no users in the userstaff table, so can't run the test");
             int calorie = SQLUtility.GetFirstColumnFirstRowValue("select max(calorie) from Recipe");
             calorie = calorie + 10;
+            DateTime currentdate = DateTime.Now;
 
-            TestContext.WriteLine("Add a recipe with the recipename, " + recipename + ", and calories = " + calorie);
+            recipename = recipename + " " + currentdate.ToString();
+            TestContext.WriteLine("Add a recipe with the recipename, " + recipename + " and calorie = " + calorie);
             
             r["RecipeName"] = recipename;
             r["CuisineId"] = cuisineid;
@@ -105,9 +107,9 @@ namespace RecipeTest
             SQLUtility.DebugPrintDataTable(dt);
             Recipe.Save(dt);
 
-            int newrecipeid = SQLUtility.GetFirstColumnFirstRowValue("select * from recipe r where r.Calorie = " + calorie);
-            Assert.That(newrecipeid > 0, "New recipe with the calorie = " + calorie + " is not found in the database.");
-            TestContext.WriteLine("The recipe with the calorie = " + calorie + " was added to the database.");
+            int newrecipeid = SQLUtility.GetFirstColumnFirstRowValue("select * from recipe r where r.calorie = " + calorie);
+            Assert.That(newrecipeid > 0, "New recipe with the recipename = " + recipename + " and calorie = " + calorie + " is not found in the database.");
+            TestContext.WriteLine("The recipe with the recipename = " + recipename + " and calorie = " + calorie + " was added to the database.");
         }
 
         [Test]
