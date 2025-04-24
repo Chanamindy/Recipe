@@ -43,7 +43,10 @@
             {
                 MessageBox.Show(ex.Message, "Recipe");
             }
-            Application.UseWaitCursor = false;
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
         private void Delete()
@@ -58,7 +61,10 @@
             {
                 MessageBox.Show(ex.Message, "Recipe");
             }
-            Application.UseWaitCursor = false;
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
         private void BtnDelete_Click(object? sender, EventArgs e)
