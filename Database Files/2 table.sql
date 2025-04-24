@@ -32,8 +32,8 @@ create table dbo.Ingredient(
 go 
 create table dbo.UserStaff(
     UserStaffId int not null identity primary key,
-    UserFirstName varchar(30) not null constraint ck_User_User_First_Name_cannot_be_blank check(UserFirstName <> ''),
-    UserLastName varchar(30) not null constraint ck_User_User_Last_Name_cannot_be_blank check(UserLastName <> ''),
+    UserFirstName varchar(30) not null constraint ck_User_First_Name_cannot_be_blank check(UserFirstName <> ''),
+    UserLastName varchar(30) not null constraint ck_User_Last_Name_cannot_be_blank check(UserLastName <> ''),
     UserName varchar(50) not null 
         constraint ck_User_User_Name_cannot_be_blank check(UserName <> '')
         constraint u_User_User_Name unique
@@ -44,12 +44,12 @@ create table dbo.Recipe(
     CuisineId int not null constraint f_Cuisine_Recipe foreign key references Cuisine(CuisineId),
     UserStaffId int not null constraint f_UserStaff_Recipe foreign key references UserStaff(UserStaffId),
     RecipeName varchar(50) not null 
-        constraint ck_Recipe_Recipe_Name_cannot_be_blank check(RecipeName <> '')
-        constraint u_Recipe_Recipe_Name unique,
+        constraint ck_Recipe_Name_cannot_be_blank check(RecipeName <> '')
+        constraint u_Recipe_Name unique,
     Calorie int not null constraint ck_Recipe_Calorie_must_be_greater_than_0 check(Calorie > 0),
-    DateDrafted datetime not null constraint ck_Recipe_Date_Drafted_must_be_between_January_2022_and_the_current_date check(DateDrafted between'2022-01-01' and getdate()),
-    DatePublished datetime null constraint ck_Recipe_Date_Published_must_be_between_January_2022_and_the_current_date check(DatePublished between'2022-01-01' and getdate()),
-    DateArchived datetime null constraint ck_Recipe_Date_Archived_must_be_between_January_2022_and_the_current_date check(DateArchived between'2022-01-01' and getdate()),
+    DateDrafted datetime not null constraint ck_Recipe_Date_Drafted_must_be_between_January_2022_and_the_current_date check((DateDrafted >= '2022-01-01') and (DateDrafted <= getdate())),
+    DatePublished datetime null constraint ck_Recipe_Date_Published_must_be_between_January_2022_and_the_current_date check((DatePublished >= '2022-01-01') and (DatePublished <= getdate())),
+    DateArchived datetime null constraint ck_Recipe_Date_Archived_must_be_between_January_2022_and_the_current_date check((DateArchived >= '2022-01-01') and (DateArchived <= getdate())),
     RecipeStatus as case 
         when DatePublished is null and DateArchived is null then 'Drafted'
         when DatePublished is not null and DateArchived is null then 'Published'

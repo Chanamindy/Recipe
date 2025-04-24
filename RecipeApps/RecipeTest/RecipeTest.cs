@@ -39,6 +39,24 @@ namespace RecipeTest
         }
 
         [Test]
+        public void EditRecipeDateDraftedToInvalidDateDrafted()
+        {
+            int recipeid = SQLUtility.GetFirstColumnFirstRowValue("select recipeid from recipe");
+            Assume.That(recipeid > 0, "No recipes in the database, can't run the test.");
+            DataTable dtdatedrafted = SQLUtility.GetDataTable("select datedrafted from recipe where recipeid = " + recipeid);
+            DateTime datedrafted = (DateTime)dtdatedrafted.Rows[0]["DateDrafted"];
+            TestContext.WriteLine("The datedrafted for the recipe with recipeid = " + recipeid + " is " + datedrafted);
+            string newdatedrafted = "1-2-2021";
+            TestContext.WriteLine("Change the datedrafted from " + datedrafted + " to " + newdatedrafted + " which is before January 1, 2022");
+
+            DataTable dt = Recipe.Load(recipeid);
+            dt.Rows[0]["DateDrafted"] = newdatedrafted;
+
+            Exception ex = Assert.Throws<Exception>(() => Recipe.Save(dt));
+            TestContext.WriteLine(ex.Message);
+        }
+
+        [Test]
         public void EditRecipeCalories()
         {
             int recipeid = SQLUtility.GetFirstColumnFirstRowValue("select recipeid from recipe");
@@ -74,6 +92,21 @@ namespace RecipeTest
             string newrecipename = GetValueOfRowAndColumnString("select recipename from recipe where recipeid = " + recipeid, "RecipeName");
             Assert.That(newrecipename == recipename, "The recipename for the recipe with the recipeid = " + recipeid + " wasn't changed to " + recipename);
             TestContext.WriteLine("The recipename for the recipe with the recipeid = " + recipeid + " was changed to " + recipename);
+        }
+
+        [Test]
+        public void EditRecipeNameToInvalidRecipeName()
+        {
+            int recipeid = SQLUtility.GetFirstColumnFirstRowValue("select recipeid from recipe");
+            Assume.That(recipeid > 0, "No recipes in the database, can't run the test.");
+            string recipename = GetFirstColumnFirstRowValueAsString("select top 1 recipename from recipe where recipeid <> " + recipeid);
+            Assume.That(recipename != "", "There are no other Recipe records in the table, can't run test.");
+            string currentrecipename = GetFirstColumnFirstRowValueAsString("select top 1 recipename from recipe where recipeid = " + recipeid);
+            TestContext.WriteLine("Change the recipeid " + recipeid + " name from " + currentrecipename + " to " + recipename);
+            DataTable dt = Recipe.Load(recipeid);
+            dt.Rows[0]["RecipeName"] = recipename;
+            Exception ex = Assert.Throws<Exception>(()=> Recipe.Save(dt));
+            TestContext.WriteLine(ex.Message);
         }
 
         [Test]
@@ -130,6 +163,19 @@ namespace RecipeTest
         }
 
         [Test]
+        public void DeleteRecipeWithRecipeDirection()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 1 r.recipeid from recipe r join mealcourserecipe mcr on r.recipeid = mcr.recipeid");
+            int recipeid = (int)dt.Rows[0]["recipeid"];
+            Assume.That(recipeid > 0, "There are no Recipes with mealcourserecipe, can't run test");
+            TestContext.WriteLine("Existing recipe with mealcourserecipe with recipeid = " + recipeid);
+            TestContext.WriteLine("Ensure that the application can't delete the recipe with recipeid = " + recipeid + " which has mealcourserecipes.");
+
+            Exception ex = Assert.Throws<Exception>(()=> Recipe.Delete(dt));
+            TestContext.WriteLine(ex.Message);
+        }
+
+        [Test]
         public void LoadRecipe()
         {
             int recipeid = (int)SQLUtility.GetFirstColumnFirstRowValue("select recipeid from recipe");
@@ -170,6 +216,20 @@ namespace RecipeTest
 
             Assert.That(dt.Rows.Count == cuisinecount, "The number of cuisines returned by the Database doesn't = " + cuisinecount + ("num of cuisines in the DB."));
             TestContext.WriteLine("The number of cuisines returned by the Database = " + cuisinecount);
+        }
+
+        private string GetFirstColumnFirstRowValueAsString(string sql)
+        {
+            string s = "";
+            DataTable dt = SQLUtility.GetDataTable(sql);
+            if (dt.Rows.Count > 0 && dt.Columns.Count > 0)
+            {
+                if (dt.Rows[0][0] != DBNull.Value)
+                {
+                    s = dt.Rows[0][0].ToString();
+                }
+            }
+            return s;
         }
     }
 }
