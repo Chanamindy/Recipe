@@ -7,7 +7,8 @@ namespace RecipeTest
         [SetUp]
         public void Setup()
         {
-            DBManager.SetConnectionString("Server=tcp:cmherszaft.database.windows.net,1433;Initial Catalog=RecipeWebsiteDB;Persist Security Info=False;User ID=Chanacpuadmin;Password=Chanaadmin412;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            DBManager.SetConnectionString("Server=.\\SQLExpress;Database=RecipeWebsiteDB;Trusted_Connection=true");
+            //("Server=tcp:cmherszaft.database.windows.net,1433;Initial Catalog=RecipeWebsiteDB;Persist Security Info=False;User ID=Chanacpuadmin;Password=Chanaadmin412;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         private string GetValueOfRowAndColumnString(string sql, string column)

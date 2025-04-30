@@ -51,6 +51,11 @@
 
         private void Delete()
         {
+            var result = MessageBox.Show("Are you sure you want to delete this Recipe?", "Recipe", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                return;
+            }
             Application.UseWaitCursor = true;
             try
             {

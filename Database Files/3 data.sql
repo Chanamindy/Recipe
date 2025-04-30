@@ -70,7 +70,7 @@ insert UserStaff(UserFirstName, UserLastName, UserName)
 select 'Chaim', 'Klien', 'CC925AA'
 union select 'Boruch', 'Katzenstien', 'BB785RT'
 union select 'Devora', 'Kimmelman', 'EV750PP'
-union select 'Chaya', 'Perstien', 'OO419KX'
+union select 'Chaya', 'Perlstien', 'OO419KX'
 union select 'Tzvi', 'Ornstien', 'ST505SS'
 union select 'Rivky', 'Friedman', 'PS021WN'
 union select 'Hindy', 'Feder', 'BJ452NN'
