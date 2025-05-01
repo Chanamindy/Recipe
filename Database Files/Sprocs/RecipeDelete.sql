@@ -27,4 +27,3 @@ begin
     finished:
     return @Return
 end
-go
