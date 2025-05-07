@@ -1,6 +1,3 @@
-using CPUFramework;
-using RecipeSystem;
-
 namespace RecipeWinForms
 {
     internal static class Program
@@ -15,6 +12,7 @@ namespace RecipeWinForms
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             DBManager.SetConnectionString("Server=tcp:cmherszaft.database.windows.net,1433;Initial Catalog=RecipeWebsiteDB;Persist Security Info=False;User ID=Chanacpuadmin;Password=Chanaadmin412;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            //"Server=.\\SQLExpress;Database=RecipeWebsiteDB;Trusted_Connection=true");
             Application.Run(new frmRecipeSearch());
         }
     }

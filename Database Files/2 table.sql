@@ -47,7 +47,7 @@ create table dbo.Recipe(
         constraint ck_Recipe_Name_cannot_be_blank check(RecipeName <> '')
         constraint u_Recipe_Name unique,
     Calorie int not null constraint ck_Recipe_Calorie_must_be_greater_than_0 check(Calorie > 0),
-    DateDrafted datetime not null constraint ck_Recipe_Date_Drafted_must_be_between_January_2022_and_the_current_date check((DateDrafted >= '2022-01-01') and (DateDrafted <= getdate())),
+    DateDrafted datetime not null constraint ck_Recipe_Date_Drafted_must_be_between_January_2022_and_the_current_date check((DateDrafted >= '2022-01-01') and (DateDrafted <= getdate())) default getdate(),
     DatePublished datetime null constraint ck_Recipe_Date_Published_must_be_between_January_2022_and_the_current_date check((DatePublished >= '2022-01-01') and (DatePublished <= getdate())),
     DateArchived datetime null constraint ck_Recipe_Date_Archived_must_be_between_January_2022_and_the_current_date check((DateArchived >= '2022-01-01') and (DateArchived <= getdate())),
     RecipeStatus as case 
