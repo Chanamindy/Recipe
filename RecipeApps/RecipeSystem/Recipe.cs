@@ -24,24 +24,56 @@ namespace RecipeSystem
             return dt;
         }
 
-        public static DataTable GetCuisineList()
+        public static DataTable GetCuisineList(bool includeblank = false)
         {
             DataTable dt = new();
             SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
             cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
             dt = SQLUtility.GetDataTable(cmd);
             return dt;
         }
 
-        public static DataTable GetUserStaffList()
+        public static DataTable GetUserStaffList(bool includeblank = false)
         {
             DataTable dt = new();
             SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
             cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
             dt = SQLUtility.GetDataTable(cmd);
             return dt;
         }
 
+        public static DataTable GetIngredientList()
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("IngredientGet");
+            SQLUtility.SetParamValue(cmd, "@All", 1);
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+
+        public static DataTable GetMeasurementList()
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("MeasurementGet");
+            SQLUtility.SetParamValue(cmd, "@All", 1);
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+
+        public static DataTable RecipeListGet()
+        {
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeListGet");
+            DataTable dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
 
         public static void Save(DataTable dtRecipe)
         {
