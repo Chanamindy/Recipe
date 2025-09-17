@@ -6,8 +6,8 @@ namespace RecipeWinForms
     {
         DataTable dtRecipe;
         BindingSource bindsource = new();
-        int recipeid = 0;
-        string recipestatus = "";
+        int recipeid;
+        string recipestatus;
         private enum RecipeStatusEnum { Drafted, Published, Archived };
         RecipeStatusEnum currentstatus = RecipeStatusEnum.Drafted;
         
@@ -29,16 +29,12 @@ namespace RecipeWinForms
         private void BindData()
         {
             dtRecipe = Recipe.Load(recipeid);
-            //DateTime datedrafted = (DateTime)dtRecipe.Rows[0]["DateDrafted"];
-            //DateTime datepublished = (DateTime)dtRecipe.Rows[0]["DatePublished"];
-            //DateTime dateArchived = (DateTime)dtRecipe.Rows[0]["DateArchived"];
             bindsource.DataSource = dtRecipe;
             WindowsFormsUtility.SetControlBinding(lblRecipeName, bindsource);
             WindowsFormsUtility.SetControlBinding(lblRecipeStatus, bindsource);
             WindowsFormsUtility.SetControlBinding(lblDateDrafted, bindsource);
             WindowsFormsUtility.SetControlBinding(lblDatePublished, bindsource);
             WindowsFormsUtility.SetControlBinding(lblDateArchived, bindsource);
-
             EnableDisableButtons();
         }
 
@@ -53,10 +49,7 @@ namespace RecipeWinForms
                 }
                 else
                 {
-                    SqlCommand cmd = SQLUtility.GetSqlCommand("ChangeRecipeStatus");
-                    SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
-                    SQLUtility.SetParamValue(cmd, "@NewRecipeStatus", newstatus);
-                    SQLUtility.ExecuteSQL(cmd);
+                    Recipe.ChangeRecipeStatus(recipeid, newstatus);
                     dtRecipe = Recipe.Load(recipeid);
                     recipestatus = dtRecipe.Rows[0]["RecipeStatus"].ToString();
                     bindsource.DataSource = dtRecipe;

@@ -1,6 +1,4 @@
-﻿using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmCloneRecipe : Form
     {
@@ -16,27 +14,16 @@ namespace RecipeWinForms
 
         private void BindData()
         {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
-            SQLUtility.SetParamValue(cmd, "@All", 1);
-            SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
-            dtRecipe = SQLUtility.GetDataTable(cmd);
-
+            dtRecipe = Recipe.Load(1, 1);
             bindsource.DataSource = dtRecipe;
-
-            lstRecipe.DataSource = dtRecipe;
-            lstRecipe.DisplayMember = "RecipeName";
-            lstRecipe.ValueMember = "RecipeId";
+            WindowsFormsUtility.BindDataToSingleList(lstRecipe, dtRecipe, "RecipeName", "RecipeId");
         }
 
         private void CloneRecipe()
         {
             int recipeid = WindowsFormsUtility.GetIdFromComboBox(lstRecipe);
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CloneRecipe");
-            SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
-            DataTable dtnew = SQLUtility.GetDataTable(cmd);
-
+            DataTable dtnew = Recipe.CloneRecipe(recipeid);
             int clonerecipeid = (int)dtnew.Rows[0]["RecipeId"];
-
             
             if (this.MdiParent != null && this.MdiParent is frmMain)
             {

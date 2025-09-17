@@ -33,13 +33,14 @@ namespace RecipeSystem
             return dtUser;
         }
 
-        public static void AutoCreateCookBook(ComboBox lstUserStaff)
-        {
-            int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
-            SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
-            SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
-            DataTable dt = SQLUtility.GetDataTable(cmd);
-            int cookbookid = (int)dt.Rows[0]["CookbookId"];
-        }
+        //public static int AutoCreateCookBook(ComboBox lstUserStaff)
+        //{
+        //    int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
+        //    SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
+        //    SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
+        //    DataTable dt = SQLUtility.GetDataTable(cmd);
+        //    int cookbookid = (int)dt.Rows[0]["CookbookId"];
+        //    return cookbookid;
+        //}
     }
 }

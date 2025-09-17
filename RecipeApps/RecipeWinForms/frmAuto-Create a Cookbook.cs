@@ -1,8 +1,4 @@
-﻿using System.Data.SqlClient;
-using System.Data;
-using RecipeSystem;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmAutoCreateCookbook : Form
     {
@@ -26,12 +22,14 @@ namespace RecipeWinForms
         private void CreateCookbook()
         {
             bindsource.ResetBindings(false);
-            Cookbook.AutoCreateCookBook(lstUserStaff);
-            int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
-            SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
-            SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
-            DataTable dt = SQLUtility.GetDataTable(cmd);
-            int cookbookid = (int)dt.Rows[0]["CookbookId"];
+            //Cookbook.AutoCreateCookBook(lstUserStaff);
+            //int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
+            //SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
+            //SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
+            //DataTable dt = SQLUtility.GetDataTable(cmd);
+            //int cookbookid = (int)dt.Rows[0]["CookbookId"];
+
+            cookbookid = Cookbook.AutoCreateCookbook(lstUserStaff);
 
             if (this.MdiParent != null && this.MdiParent is frmMain)
             {
