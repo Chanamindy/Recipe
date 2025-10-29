@@ -19,10 +19,17 @@
 
         public void BindData()
         {
-            DataTable dt = Recipe.RecipeListGet();
+            DataTable dt = RecipeListGet();
             gRecipeList.DataSource = dt;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipeList, "Recipe");
             gRecipeList.Show();
+        }
+
+        public static DataTable RecipeListGet()
+        {
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeListGet");
+            DataTable dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
         private void ShowRecipeDetailsForm(int rowindex)

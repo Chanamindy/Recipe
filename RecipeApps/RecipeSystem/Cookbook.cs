@@ -1,5 +1,4 @@
 ﻿using CPUFramework;
-//using CPUWindowsFormsFramework;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -24,18 +23,17 @@ namespace RecipeSystem
             SQLUtility.ExecuteSQL(cmd);
         }
 
-        public static DataTable UserNameGet()
-        {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
-            SQLUtility.SetParamValue(cmd, "@All", 1);
-            SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
-            DataTable dtUser = SQLUtility.GetDataTable(cmd);
-            return dtUser;
-        }
-
-        //public static int AutoCreateCookBook(ComboBox lstUserStaff)
+        //public static DataTable UserNameGet()
         //{
-        //    int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
+        //    SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
+        //    SQLUtility.SetParamValue(cmd, "@All", 1);
+        //    SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
+        //    DataTable dtUser = SQLUtility.GetDataTable(cmd);
+        //    return dtUser;
+        //}
+        //
+        //public static int AutoCreateCookBook(int userstaffid)
+        //{
         //    SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
         //    SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
         //    DataTable dt = SQLUtility.GetDataTable(cmd);

@@ -1,4 +1,8 @@
-﻿namespace RecipeWinForms
+﻿using RecipeSystem;
+using CPUFramework;
+using CPUWindowsFormsFramework;
+
+namespace RecipeWinForms
 {
     public partial class frmRecipeDetail : Form
     {
@@ -42,9 +46,11 @@
             {
                 dtRecipe.Rows.Add();
             }
-            DataTable dtCuisine = Recipe.GetCuisineList(true);
+            //DataTable dtCuisine = Recipe.GetCuisineList(true);
+            DataTable dtCuisine = GetCuisineList(true);
             SQLUtility.DebugPrintDataTable(dtCuisine);
-            DataTable dtUserStaff = Recipe.GetUserStaffList(true);
+            //DataTable dtUserStaff = Recipe.GetUserStaffList(true);
+            DataTable dtUserStaff = GetUserStaffList(true);
             SQLUtility.DebugPrintDataTable(dtUserStaff);
             WindowsFormsUtility.SetListBinding(lstCuisineType, dtCuisine, dtRecipe, "Cuisine");
             WindowsFormsUtility.SetListBinding(lstUserName, dtUserStaff, dtRecipe, "UserStaff");
@@ -56,8 +62,46 @@
             WindowsFormsUtility.SetControlBinding(lblRecipeStatus, bindsource);
             this.Text = GetRecipeDesc();
             this.Shown += FrmRecipeDetail_Shown;
+            SetSetButtonsEnabledBasedOnNewRecord();
         }
 
+        //Start
+
+        public static DataTable Load(int RecipeId = 0, bool all = false, bool blank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+            SQLUtility.SetParamValue(cmd, "@RecipeId", RecipeId);
+            SQLUtility.SetParamValue(cmd, "@All", all);
+            SQLUtility.SetParamValue(cmd, "@IncludeBlank", blank);
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+        public static DataTable GetCuisineList(bool includeblank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
+            cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+        public static DataTable GetUserStaffList(bool includeblank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
+            cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+        //End
         private void LoadRecipeDirectionTable(int recipeid)
         {
             gRecipeDirection.Columns.Clear();
@@ -114,6 +158,7 @@
                 bindsource.ResetBindings(false);
                 recipeid = (int)dtRecipe.Rows[0]["RecipeId"];
                 this.Tag = recipeid;
+                SetSetButtonsEnabledBasedOnNewRecord();
                 this.Text = GetRecipeDesc();
             }
             catch (Exception ex)
@@ -325,6 +370,15 @@
                         break;
                 }
             }
+        }
+
+        private void SetSetButtonsEnabledBasedOnNewRecord()
+        {
+            bool b = recipeid == 0 ? false : true;
+            btnDelete.Enabled = b;
+            btnChangeStatus.Enabled = b;
+            btnSaveRecipeIngredient.Enabled = b;
+            btnSaveRecipeDirection.Enabled = b;
         }
 
         private void GRecipeDirection_CellContentClick(object? sender, DataGridViewCellEventArgs e)

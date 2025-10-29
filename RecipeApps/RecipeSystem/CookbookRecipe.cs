@@ -1,4 +1,5 @@
 ﻿using CPUFramework;
+//using CPUWindowsFormsFramework;
 using System.Data;
 using System.Data.SqlClient;
 
