@@ -55,10 +55,10 @@
             // 
             lstRecipe.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lstRecipe.FormattingEnabled = true;
-            lstRecipe.Location = new Point(305, 88);
+            lstRecipe.Location = new Point(164, 80);
             lstRecipe.Margin = new Padding(3, 3, 3, 25);
             lstRecipe.Name = "lstRecipe";
-            lstRecipe.Size = new Size(151, 36);
+            lstRecipe.Size = new Size(292, 36);
             lstRecipe.TabIndex = 0;
             // 
             // btnClone

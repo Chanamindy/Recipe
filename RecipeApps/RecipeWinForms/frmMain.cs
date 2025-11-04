@@ -16,7 +16,7 @@
             mnuEditData.Click += MnuEditData_Click;
             mnuTile.Click += MnuTile_Click;
             mnuCascade.Click += MnuCascade_Click;
-            this.Shown += FrmMain_Shown; 
+            this.Shown += FrmMain_Shown;
         }
 
         private void FrmMain_Shown(object? sender, EventArgs e)

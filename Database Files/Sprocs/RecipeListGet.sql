@@ -1,4 +1,4 @@
-create or alter proc dbo.RecipeListGet(
+create or alter proc dbo.RecipeListSummaryGet(
 	@Message varchar(500) = '' output
 )
 as
@@ -20,5 +20,3 @@ begin
 	order by r.RecipeStatus desc  
 end
 go
-
-exec RecipeListGet

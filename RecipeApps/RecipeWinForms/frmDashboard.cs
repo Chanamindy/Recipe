@@ -1,6 +1,4 @@
-﻿using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmDashboard : Form
     {

@@ -2,6 +2,8 @@
 {
     public partial class frmRecipeList : Form
     {
+        DataTable dtRecipe;
+
         public frmRecipeList()
         {
             InitializeComponent();
@@ -19,17 +21,10 @@
 
         public void BindData()
         {
-            DataTable dt = RecipeListGet();
-            gRecipeList.DataSource = dt;
+            dtRecipe = Recipe.RecipeListSummaryGet();
+            gRecipeList.DataSource = dtRecipe;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipeList, "Recipe");
             gRecipeList.Show();
-        }
-
-        public static DataTable RecipeListGet()
-        {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeListGet");
-            DataTable dt = SQLUtility.GetDataTable(cmd);
-            return dt;
         }
 
         private void ShowRecipeDetailsForm(int rowindex)
@@ -47,7 +42,7 @@
 
         private void GRecipeList_Enter(object? sender, EventArgs e)
         {
-            
+            //ShowRecipeDetailsForm();
         }
 
         private void GRecipeList_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
@@ -59,6 +54,5 @@
         {
             ShowRecipeDetailsForm(-1);
         }
-
     }
 }

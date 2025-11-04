@@ -15,43 +15,49 @@ namespace RecipeSystem
             return dt;
         }
 
-        //public static DataTable Load(int RecipeId = 0, bool all = false, bool blank = false)
-        //{
-        //    DataTable dt = new();
-        //    SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
-        //    SQLUtility.SetParamValue(cmd, "@RecipeId", RecipeId);
-        //    SQLUtility.SetParamValue(cmd, "@All", all);
-        //    SQLUtility.SetParamValue(cmd, "@IncludeBlank", blank);
-        //    dt = SQLUtility.GetDataTable(cmd);
-        //    return dt;
-        //}
+        public static DataTable Load(int RecipeId = 0, bool all = false, bool blank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+            SQLUtility.SetParamValue(cmd, "@RecipeId", RecipeId);
+            SQLUtility.SetParamValue(cmd, "@All", all);
+            SQLUtility.SetParamValue(cmd, "@IncludeBlank", blank);
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
 
-        
-        //public static DataTable GetCuisineList(bool includeblank = false)
-        //{
-        //    DataTable dt = new();
-        //    SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
-        //    cmd.Parameters["@All"].Value = 1;
-        //    if (includeblank == true)
-        //    {
-        //        cmd.Parameters["@IncludeBlank"].Value = 1;
-        //    }
-        //    dt = SQLUtility.GetDataTable(cmd);
-        //    return dt;
-        //}
+        public static DataTable RecipeListSummaryGet()
+        {
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeListSummaryGet");
+            DataTable dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
 
-        //public static DataTable GetUserStaffList(bool includeblank = false)
-        //{
-        //    DataTable dt = new();
-        //    SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
-        //    cmd.Parameters["@All"].Value = 1;
-        //    if (includeblank == true)
-        //    {
-        //        cmd.Parameters["@IncludeBlank"].Value = 1;
-        //    }
-        //    dt = SQLUtility.GetDataTable(cmd);
-        //    return dt;
-        //}
+        public static DataTable GetCuisineList(bool includeblank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
+            cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+
+        public static DataTable GetUserStaffList(bool includeblank = false)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
+            cmd.Parameters["@All"].Value = 1;
+            if (includeblank == true)
+            {
+                cmd.Parameters["@IncludeBlank"].Value = 1;
+            }
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
 
         public static DataTable GetIngredientList()
         {
@@ -61,7 +67,7 @@ namespace RecipeSystem
             dt = SQLUtility.GetDataTable(cmd);
             return dt;
         }
-
+        
         public static DataTable GetMeasurementList()
         {
             DataTable dt = new();
@@ -96,6 +102,15 @@ namespace RecipeSystem
             SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
             SQLUtility.SetParamValue(cmd, "@NewRecipeStatus", newstatus);
             SQLUtility.ExecuteSQL(cmd);
+        }
+
+        public static DataTable CloneRecipe(int recipeid)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CloneRecipe");
+            SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
     }
 }

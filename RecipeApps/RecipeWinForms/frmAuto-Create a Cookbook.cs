@@ -1,7 +1,4 @@
-﻿using CPUFramework;
-using RecipeSystem;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmAutoCreateCookbook : Form
     {
@@ -17,7 +14,7 @@ namespace RecipeWinForms
         private void BindData()
         {
             DataTable dtUser = new();
-            dtUser = UserNameGet();
+            dtUser = Cookbook.UserNameGet();
             bindsource.DataSource = dtUser;
             WindowsFormsUtility.BindDataToSingleList(lstUserStaff, dtUser, "UserName", "UserStaffId");
         }
@@ -26,37 +23,12 @@ namespace RecipeWinForms
         {
             bindsource.ResetBindings(false); 
             int userstaffid = WindowsFormsUtility.GetIdFromComboBox(lstUserStaff);
-            int cookbookid = AutoCreateCookBook(userstaffid);
-            SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
-            SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
-            DataTable dt = SQLUtility.GetDataTable(cmd);
-            //int cookbookid = (int)dt.Rows[0]["CookbookId"];
-
-            //cookbookid = Cookbook.AutoCreateCookbook(lstUserStaff);
-
+            int cookbookid = Cookbook.AutoCreateCookBook(userstaffid);
             if (this.MdiParent != null && this.MdiParent is frmMain)
             {
                 ((frmMain)this.MdiParent).OpenForm(typeof(frmCookbookDetail), cookbookid);
                 this.Close();
             }
-        }
-
-        public static DataTable UserNameGet()
-        {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
-            SQLUtility.SetParamValue(cmd, "@All", 1);
-            SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
-            DataTable dtUser = SQLUtility.GetDataTable(cmd);
-            return dtUser;
-        }
-
-        public static int AutoCreateCookBook(int userstaffid)
-        {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("AutoCreateCookbook");
-            SQLUtility.SetParamValue(cmd, "@UserStaffId", userstaffid);
-            DataTable dt = SQLUtility.GetDataTable(cmd);
-            int cookbookid = (int)dt.Rows[0]["CookbookId"];
-            return cookbookid;
         }
 
         private void BtnCreateCookbook_Click(object? sender, EventArgs e)

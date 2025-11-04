@@ -15,17 +15,3 @@ begin
 	order by r.RecipeName
 end
 go
-
-/*
-execute dbo.RecipeGet --Return no results
-
-execute dbo.RecipeGet @RecipeName = null -- Return no results
-
-declare @RecipeId int
-select top 1 @RecipeId = RecipeId from Recipe
-execute dbo.RecipeGet @RecipeId = @RecipeId
-
-execute dbo.RecipeGet @All = 1
-
-execute dbo.RecipeGet @RecipeName = 'a'
-*/

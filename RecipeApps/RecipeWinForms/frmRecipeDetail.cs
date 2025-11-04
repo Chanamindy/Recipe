@@ -1,8 +1,4 @@
-﻿using RecipeSystem;
-using CPUFramework;
-using CPUWindowsFormsFramework;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmRecipeDetail : Form
     {
@@ -31,7 +27,6 @@ namespace RecipeWinForms
 
         private void FrmRecipeDetail_Shown(object? sender, EventArgs e)
         {
-
             LoadRecipeIngredientTable(recipeid);
             LoadRecipeDirectionTable(recipeid);
         }
@@ -46,11 +41,9 @@ namespace RecipeWinForms
             {
                 dtRecipe.Rows.Add();
             }
-            //DataTable dtCuisine = Recipe.GetCuisineList(true);
-            DataTable dtCuisine = GetCuisineList(true);
+            DataTable dtCuisine = Recipe.GetCuisineList(true);
             SQLUtility.DebugPrintDataTable(dtCuisine);
-            //DataTable dtUserStaff = Recipe.GetUserStaffList(true);
-            DataTable dtUserStaff = GetUserStaffList(true);
+            DataTable dtUserStaff = Recipe.GetUserStaffList(true);
             SQLUtility.DebugPrintDataTable(dtUserStaff);
             WindowsFormsUtility.SetListBinding(lstCuisineType, dtCuisine, dtRecipe, "Cuisine");
             WindowsFormsUtility.SetListBinding(lstUserName, dtUserStaff, dtRecipe, "UserStaff");
@@ -64,54 +57,14 @@ namespace RecipeWinForms
             this.Shown += FrmRecipeDetail_Shown;
             SetSetButtonsEnabledBasedOnNewRecord();
         }
-
-        //Start
-
-        public static DataTable Load(int RecipeId = 0, bool all = false, bool blank = false)
-        {
-            DataTable dt = new();
-            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
-            SQLUtility.SetParamValue(cmd, "@RecipeId", RecipeId);
-            SQLUtility.SetParamValue(cmd, "@All", all);
-            SQLUtility.SetParamValue(cmd, "@IncludeBlank", blank);
-            dt = SQLUtility.GetDataTable(cmd);
-            return dt;
-        }
-        public static DataTable GetCuisineList(bool includeblank = false)
-        {
-            DataTable dt = new();
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
-            cmd.Parameters["@All"].Value = 1;
-            if (includeblank == true)
-            {
-                cmd.Parameters["@IncludeBlank"].Value = 1;
-            }
-            dt = SQLUtility.GetDataTable(cmd);
-            return dt;
-        }
-        public static DataTable GetUserStaffList(bool includeblank = false)
-        {
-            DataTable dt = new();
-            SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
-            cmd.Parameters["@All"].Value = 1;
-            if (includeblank == true)
-            {
-                cmd.Parameters["@IncludeBlank"].Value = 1;
-            }
-            dt = SQLUtility.GetDataTable(cmd);
-            return dt;
-        }
-        //End
+        
         private void LoadRecipeDirectionTable(int recipeid)
         {
             gRecipeDirection.Columns.Clear();
             dtRecipeDirection = RecipeDirection.LoadRecipeDirectionById(recipeid);
             gRecipeDirection.DataSource = dtRecipeDirection;
-            //WindowsFormsUtility.FormatGridForEdit(gRecipeDirection, "RecipeDirection");
-
             WindowsFormsUtility.AddDeleteButtonToGrid(gRecipeDirection, deletecolname);
             tabPage2.Text = "Steps";
-
             gRecipeDirection.Show();
             WindowsFormsUtility.FormatGridForEdit(gRecipeDirection, "RecipeDirection");
         }
@@ -121,17 +74,12 @@ namespace RecipeWinForms
             gRecipeIngredient.Columns.Clear();
             dtRecipeIngredient = RecipeIngredient.LoadRecipeIngredientById(recipeid);
             gRecipeIngredient.DataSource = dtRecipeIngredient;
-            //WindowsFormsUtility.FormatGridForEdit(gRecipeIngredient, "RecipeIngredient");
-
             dtIngredient = Recipe.GetIngredientList();
             WindowsFormsUtility.AddComboBoxToGrid(gRecipeIngredient, dtIngredient, "Ingredient", "IngredientName");
-
             dtMeasurement = Recipe.GetMeasurementList();
             WindowsFormsUtility.AddComboBoxToGrid(gRecipeIngredient, dtMeasurement, "Measurement", "MeasurementType");
-
             WindowsFormsUtility.AddDeleteButtonToGrid(gRecipeIngredient, deletecolname);
             tabPage1.Text = "Ingredients";
-
             gRecipeIngredient.Show();
             WindowsFormsUtility.FormatGridForEdit(gRecipeIngredient, "RecipeIngredient");
         }
@@ -158,6 +106,8 @@ namespace RecipeWinForms
                 bindsource.ResetBindings(false);
                 recipeid = (int)dtRecipe.Rows[0]["RecipeId"];
                 this.Tag = recipeid;
+                dtRecipe = Recipe.Load(recipeid);
+                bindsource.DataSource = dtRecipe;
                 SetSetButtonsEnabledBasedOnNewRecord();
                 this.Text = GetRecipeDesc();
             }
@@ -174,7 +124,6 @@ namespace RecipeWinForms
 
         private void DeleteRecipe(DataTable dt)
         {
-            //Don't ask delete if didn't save...
             var result = MessageBox.Show("Are you sure you want to delete this Recipe?", "Recipe", MessageBoxButtons.YesNo);
             if (result == DialogResult.No)
             {
@@ -403,14 +352,18 @@ namespace RecipeWinForms
             SaveRecipeIngredient();
         }
 
-        private void BtnChangeStatus_Click(object? sender, EventArgs e)
+        private void ChangeRecipeStatus()
         {
-            //take out of event handler.
             string recipestatus = dtRecipe.Rows[0]["RecipeStatus"].ToString();
             frmChangeStatus f = new();
             f.OpenForm(recipeid, recipestatus);
             f.Show();
             f.FormClosed += F_FormClosed;
+        }
+
+        private void BtnChangeStatus_Click(object? sender, EventArgs e)
+        {
+            ChangeRecipeStatus();
         }
 
         private void F_FormClosed(object? sender, FormClosedEventArgs e)

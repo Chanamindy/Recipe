@@ -14,7 +14,7 @@
 
         private void BindData()
         {
-            dtRecipe = Recipe.Load(1, 1);
+            dtRecipe = Recipe.Load(0, true, true);
             bindsource.DataSource = dtRecipe;
             WindowsFormsUtility.BindDataToSingleList(lstRecipe, dtRecipe, "RecipeName", "RecipeId");
         }

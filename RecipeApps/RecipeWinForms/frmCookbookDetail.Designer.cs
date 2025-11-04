@@ -96,7 +96,7 @@
             tblRecipe.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2666664F));
             tblRecipe.RowStyles.Add(new RowStyle(SizeType.Percent, 83.73333F));
             tblRecipe.Size = new Size(650, 397);
-            tblRecipe.TabIndex = 0;
+            tblRecipe.TabIndex = 10;
             // 
             // gRecipe
             // 
@@ -124,7 +124,7 @@
             btnSaveCookbook.Location = new Point(3, 3);
             btnSaveCookbook.Name = "btnSaveCookbook";
             btnSaveCookbook.Size = new Size(94, 38);
-            btnSaveCookbook.TabIndex = 1;
+            btnSaveCookbook.TabIndex = 8;
             btnSaveCookbook.Text = "Save";
             btnSaveCookbook.UseVisualStyleBackColor = true;
             // 
@@ -134,7 +134,7 @@
             btnDelete.Location = new Point(195, 3);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(94, 38);
-            btnDelete.TabIndex = 2;
+            btnDelete.TabIndex = 9;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
             // 
@@ -162,7 +162,7 @@
             lblCaptionPrice.Location = new Point(3, 228);
             lblCaptionPrice.Name = "lblCaptionPrice";
             lblCaptionPrice.Size = new Size(54, 28);
-            lblCaptionPrice.TabIndex = 4;
+            lblCaptionPrice.TabIndex = 5;
             lblCaptionPrice.Text = "Price";
             // 
             // lblCaptionActive
@@ -171,7 +171,7 @@
             lblCaptionActive.Location = new Point(3, 297);
             lblCaptionActive.Name = "lblCaptionActive";
             lblCaptionActive.Size = new Size(66, 28);
-            lblCaptionActive.TabIndex = 5;
+            lblCaptionActive.TabIndex = 6;
             lblCaptionActive.Text = "Active";
             // 
             // lstUserName
@@ -189,7 +189,7 @@
             chkCookbookStatus.Location = new Point(195, 300);
             chkCookbookStatus.Name = "chkCookbookStatus";
             chkCookbookStatus.Size = new Size(18, 17);
-            chkCookbookStatus.TabIndex = 6;
+            chkCookbookStatus.TabIndex = 7;
             chkCookbookStatus.UseVisualStyleBackColor = true;
             // 
             // tblPrice
@@ -209,7 +209,7 @@
             tblPrice.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblPrice.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblPrice.Size = new Size(458, 127);
-            tblPrice.TabIndex = 10;
+            tblPrice.TabIndex = 4;
             // 
             // lblCaptionDateCreated
             // 
@@ -217,7 +217,7 @@
             lblCaptionDateCreated.Location = new Point(293, 0);
             lblCaptionDateCreated.Name = "lblCaptionDateCreated";
             lblCaptionDateCreated.Size = new Size(126, 28);
-            lblCaptionDateCreated.TabIndex = 2;
+            lblCaptionDateCreated.TabIndex = 0;
             lblCaptionDateCreated.Text = "Date Created";
             // 
             // txtCookbookPrice

@@ -1,7 +1,4 @@
-﻿using RecipeSystem;
-using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmCookbookDetail : Form
     {
@@ -34,14 +31,9 @@ namespace RecipeWinForms
         {
             cookbookid = cookbookidvalue;
             this.Tag = cookbookid;
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookListGet");
-            SQLUtility.SetParamValue(cmd, "@CookbookId", cookbookid);
-            dtCookbook = SQLUtility.GetDataTable(cmd);
+            dtCookbook = Cookbook.LoadCookbookById(cookbookid);
             bindsource.DataSource = dtCookbook;
-
-            SqlCommand cmdUser = SQLUtility.GetSqlCommand("UserNameGet");
-            SQLUtility.SetParamValue(cmdUser, "@All", 1);
-            dtUser = SQLUtility.GetDataTable(cmdUser);
+            dtUser = Cookbook.UserNameGet();
 
             if (cookbookid == 0)
             {
@@ -54,27 +46,19 @@ namespace RecipeWinForms
             WindowsFormsUtility.SetControlBinding(chkCookbookStatus, bindsource);
             this.Text = GetCookbookDesc();
             this.Shown += FrmCookbookDetail_Shown;
+            SetSetButtonsEnabledBasedOnNewRecord();
         }
 
         private void LoadCookbookRecipes()
         {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookRecipesGet");
-            SQLUtility.SetParamValue(cmd, "@CookbookId", cookbookid);
-            dtCookbookRecipe = SQLUtility.GetDataTable(cmd);
+            dtCookbookRecipe = Cookbook.LoadCookbookRecipesById(cookbookid);
             gRecipe.Columns.Clear();
             gRecipe.DataSource = dtCookbookRecipe;
-            
-            SqlCommand cmdRecipe = SQLUtility.GetSqlCommand("RecipeGet");
-            SQLUtility.SetParamValue(cmdRecipe, "@All", 1);
-            SQLUtility.SetParamValue(cmdRecipe, "@IncludeBlank", 1);
-            DataTable dtRecipe = SQLUtility.GetDataTable(cmdRecipe);
+            dtRecipe = Cookbook.GetRecipeList(true);
             WindowsFormsUtility.AddComboBoxToGrid(gRecipe, dtRecipe, "Recipe", "RecipeName");
-
             WindowsFormsUtility.AddDeleteButtonToGrid(gRecipe, deletecolname);
             WindowsFormsUtility.FormatGridForEdit(gRecipe, "CookbookRecipe");
-
             gRecipe.Show();
-            WindowsFormsUtility.FormatGridForEdit(gRecipe, "CookbookRecipe");
         }
 
         private string GetCookbookDesc()
@@ -86,6 +70,13 @@ namespace RecipeWinForms
                 value = SQLUtility.GetValueFromFirstRowAsString(dtCookbook, "CookbookName");
             }
             return value;
+        }
+
+        private void SetSetButtonsEnabledBasedOnNewRecord()
+        {
+            bool b = cookbookid == 0 ? false : true;
+            btnDelete.Enabled = b;
+            btnSaveRecipe.Enabled = b;
         }
 
         private void DeleteCookbookRecipe(int rowIndex)
@@ -151,6 +142,7 @@ namespace RecipeWinForms
                 bindsource.ResetBindings(false);
                 cookbookid = (int)dtCookbook.Rows[0]["CookbookId"];
                 this.Tag = cookbookid;
+                SetSetButtonsEnabledBasedOnNewRecord();
                 this.Text = GetCookbookDesc();
             }
             catch (Exception ex)

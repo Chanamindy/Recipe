@@ -1,7 +1,4 @@
-﻿using RecipeSystem;
-using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmDataMaintenance : Form
     {
@@ -29,10 +26,8 @@ namespace RecipeWinForms
         {
             currenttabletype = tabletype;
             gDataMaintenance.Columns.Clear();
-            string procname = tabletype.ToString() + "Get";
-            SqlCommand cmd = SQLUtility.GetSqlCommand(procname);
-            SQLUtility.SetParamValue(cmd, "@All", 1);
-            dt = SQLUtility.GetDataTable(cmd);
+            string procname = tabletype.ToString();
+            dt = DataMaintenance.DataListGet(procname);
             gDataMaintenance.DataSource = dt;
             WindowsFormsUtility.FormatGridForEdit(gDataMaintenance, tabletype.ToString());
             WindowsFormsUtility.AddDeleteButtonToGrid(gDataMaintenance, deletecolname);
@@ -76,6 +71,32 @@ namespace RecipeWinForms
             }
         }
 
+        private bool Save()
+        {
+            bool b = false;
+            Application.UseWaitCursor = true;
+            try
+            {
+                foreach (DataRow r in dt.Select("", "", DataViewRowState.Added))
+                {
+                    SQLUtility.SaveDataRow(r, currenttabletype.ToString() + "Update");
+                }
+                if (currenttabletype == TableTypeEnum.UserStaff)
+                {
+                    BindData(currenttabletype);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Application.ProductName);
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
+            return b;
+        }
+
         private void SetUpRadioButtons()
         {
             foreach (Control c in pnlRadioButtons.Controls)
@@ -108,28 +129,6 @@ namespace RecipeWinForms
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             Save();
-        }
-
-        private bool Save()
-        {
-            bool b = false;
-            Application.UseWaitCursor = true;
-            try
-            {
-                foreach (DataRow r in dt.Select("", "", DataViewRowState.Added))
-                {
-                    SQLUtility.SaveDataRow(r, currenttabletype.ToString() + "Update");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Application.ProductName);
-            }
-            finally
-            {
-                Application.UseWaitCursor = false;
-            }
-            return b;
         }
 
         private void GDataMaintenance_CellContentClick(object? sender, DataGridViewCellEventArgs e)

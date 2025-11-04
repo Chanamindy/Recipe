@@ -1,6 +1,4 @@
-﻿using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmCookbookList : Form
     {
@@ -20,9 +18,8 @@ namespace RecipeWinForms
 
         private void BindData()
         {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookListSummaryGet");
-            SQLUtility.SetParamValue(cmd, "@All", 1);
-            DataTable dt = SQLUtility.GetDataTable(cmd);
+
+            DataTable dt = Cookbook.CookbookListSummaryGet();
             gCookbookList.DataSource = dt;
             WindowsFormsUtility.FormatGridForSearchResults(gCookbookList, "Cookbook");
         }

@@ -1,6 +1,3 @@
-use RecipeWebsiteDB	
-go
-
 create or alter procedure dbo.UserStaffGet(@UserStaffId int = 0, @All bit = 0, @UserStaff varchar(30) = '', @IncludeBlank bit = 0)
 as
 begin
@@ -11,21 +8,7 @@ begin
 	or (@UserStaff <> '' and us.UserLastName like '%' + @UserStaff + '%')
 	union select 0, ' ', ' ', ' ', ' '
 	where @IncludeBlank = 1
-	order by us.UserLastName
+	order by us.UserStaffId
 	
 end
 go
-
-/*
-execute dbo.UserNameGet --return no results
-
-execute dbo.UserNameGet @UserName = null --return no results
-
-declare @UserStaffId int
-select top 1 @UserStaffId = us.UserStaffId from UserStaff us
-execute dbo.UserNameGet @UserStaffId = @UserStaffId
-
-execute dbo.UserNameGet @All = 1
-
-execute dbo.UserNameGet @UserName = 'a'
-*/

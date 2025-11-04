@@ -35,4 +35,7 @@ begin
 			DateArchived = @DateArchived
 		where RecipeId = @RecipeId
 	end
+
+	select * from Recipe r
+	where r.RecipeId = @RecipeId
 end

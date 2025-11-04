@@ -146,7 +146,7 @@
             gDataMaintenance.Name = "gDataMaintenance";
             gDataMaintenance.RowHeadersWidth = 51;
             gDataMaintenance.Size = new Size(874, 544);
-            gDataMaintenance.TabIndex = 2;
+            gDataMaintenance.TabIndex = 1;
             // 
             // frmDataMaintenance
             // 
