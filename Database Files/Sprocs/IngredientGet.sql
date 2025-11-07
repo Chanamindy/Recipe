@@ -10,6 +10,4 @@ begin
 	where i.IngredientId = @IngredientId 
 	or @All = 1
 end
-go 
-
---exec IngredientGet @All = 1
+go

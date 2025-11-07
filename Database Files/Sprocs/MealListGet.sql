@@ -19,6 +19,4 @@ begin
 end
 go
 
-exec MealListGet
-
 		

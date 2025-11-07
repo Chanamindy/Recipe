@@ -11,5 +11,3 @@ begin
 	or @All = 1
 end
 go
-
---exec MeasurementGet @All = 1

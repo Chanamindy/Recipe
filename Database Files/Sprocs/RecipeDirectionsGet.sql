@@ -11,5 +11,3 @@ begin
 	where r.RecipeId = @RecipeId
 	order by rd.RecipeDirectionSequence
 end
-
---exec RecipeDirectionsGet @RecipeId = 3

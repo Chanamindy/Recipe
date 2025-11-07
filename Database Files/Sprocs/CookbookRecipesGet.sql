@@ -12,5 +12,3 @@ begin
 	order by cbr.RecipeSequence
 end
 go
-
---exec CookbookRecipesGet @CookbookId = 10, @IncludeBlank = 1

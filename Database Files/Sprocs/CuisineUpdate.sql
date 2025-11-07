@@ -23,8 +23,3 @@ begin
 	end
 end
 go
-
-/*
-exec CuisineUpdate @CuisineType = 'Mixed'
-select * from Cuisine
-*/

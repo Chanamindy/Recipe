@@ -55,7 +55,7 @@
             // 
             lstRecipe.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lstRecipe.FormattingEnabled = true;
-            lstRecipe.Location = new Point(164, 80);
+            lstRecipe.Location = new Point(164, 88);
             lstRecipe.Margin = new Padding(3, 3, 3, 25);
             lstRecipe.Name = "lstRecipe";
             lstRecipe.Size = new Size(292, 36);

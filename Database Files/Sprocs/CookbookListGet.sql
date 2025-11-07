@@ -11,5 +11,3 @@ begin
 	or cb.CookbookId = @CookbookId
 end 
 go
-
---exec CookbookListGet @CookbookId = 1

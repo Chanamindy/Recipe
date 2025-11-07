@@ -16,5 +16,3 @@ begin
 	order by ri.IngredientSequence
 end
 go
-
---exec RecipeIngredientsGet @RecipeId = 2

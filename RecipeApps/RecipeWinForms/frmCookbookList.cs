@@ -18,7 +18,6 @@
 
         private void BindData()
         {
-
             DataTable dt = Cookbook.CookbookListSummaryGet();
             gCookbookList.DataSource = dt;
             WindowsFormsUtility.FormatGridForSearchResults(gCookbookList, "Cookbook");

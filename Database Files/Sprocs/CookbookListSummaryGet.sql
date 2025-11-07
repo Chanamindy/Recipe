@@ -19,5 +19,3 @@ begin
 	order by cb.CookbookName
 end 
 go
-
---exec CookbookListSummaryGet @All = 1

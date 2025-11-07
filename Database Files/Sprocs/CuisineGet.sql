@@ -15,17 +15,3 @@ begin
 	order by c.CuisineType
 end
 go
-
-/*
-execute dbo.CuisineGet --return no results
-
-execute dbo.CuisineGet @CuisineType = null --return no results
-
-declare @CuisineId int
-select top 1 @CuisineId = CuisineId from Cuisine
-execute dbo.CuisineGet @CuisineId = @CuisineId
-
-execute dbo.CuisineGet @All = 1
-
-execute dbo.CuisineGet @CuisineType = 'a'
-*/

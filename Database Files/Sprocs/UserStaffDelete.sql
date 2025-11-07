@@ -69,20 +69,3 @@ begin
 	return @return
 end
 go
-/*
-		select *
-		from MealCourseRecipe mcr 
-		join MealCourse mc
-		on mcr.MealCourseId = mc.MealCourseId
-		join Meal m
-		on mc.MealId = m.MealId
-		where m.UserStaffId = 126
-
-		select * 
-		from Meal m
-		join MealCourse mc 
-		on m.MealId = mc.MealId 
-		where m.UserStaffId = 118
-
-		select * from UserStaff
-		*/

@@ -12,5 +12,3 @@ begin
 	order by Type desc
 end
 go
-
-exec DashboardSummarGet

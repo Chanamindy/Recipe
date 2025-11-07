@@ -22,8 +22,3 @@ begin
 		where IngredientId = @IngredientId
 	end
 end
-
-/*
-exec IngredientUpdate @IngredientName = 'Sweet Potato'
-select * from Ingredient
-*/

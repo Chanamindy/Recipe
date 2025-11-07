@@ -10,7 +10,7 @@
             BindData();
             this.Activated += FrmRecipeList_Activated;
             gRecipeList.CellDoubleClick += GRecipeList_CellDoubleClick;
-            gRecipeList.Enter += GRecipeList_Enter;
+            gRecipeList.KeyDown += GRecipeList_KeyDown; ;
             btnNewRecipe.Click += BtnNewRecipe_Click;
         }
 
@@ -24,7 +24,7 @@
             dtRecipe = Recipe.RecipeListSummaryGet();
             gRecipeList.DataSource = dtRecipe;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipeList, "Recipe");
-            gRecipeList.Show();
+            //gRecipeList.Show();
         }
 
         private void ShowRecipeDetailsForm(int rowindex)
@@ -40,9 +40,13 @@
             }
         }
 
-        private void GRecipeList_Enter(object? sender, EventArgs e)
+        private void GRecipeList_KeyDown(object? sender, KeyEventArgs e)
         {
-            //ShowRecipeDetailsForm();
+            if (e.KeyCode == Keys.Enter)
+            {
+                ShowRecipeDetailsForm(gRecipeList.CurrentCell.RowIndex);
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void GRecipeList_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)

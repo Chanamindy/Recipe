@@ -53,7 +53,7 @@ namespace RecipeSystem
             cmd.Parameters["@All"].Value = 1;
             if (includeblank == true)
             {
-                cmd.Parameters["@IncludeBlank"].Value = 1;
+                SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
             }
             dt = SQLUtility.GetDataTable(cmd);
             return dt;
