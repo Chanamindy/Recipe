@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             tblMain = new TableLayoutPanel();
-            lstUserStaff = new ComboBox();
             btnCreateCookbook = new Button();
+            lstUserStaff = new ComboBox();
             tblMain.SuspendLayout();
             SuspendLayout();
             // 
@@ -39,8 +39,8 @@
             tblMain.ColumnCount = 2;
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tblMain.Controls.Add(lstUserStaff, 0, 0);
             tblMain.Controls.Add(btnCreateCookbook, 1, 0);
+            tblMain.Controls.Add(lstUserStaff, 0, 0);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Margin = new Padding(4);
@@ -49,16 +49,6 @@
             tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblMain.Size = new Size(784, 247);
             tblMain.TabIndex = 0;
-            // 
-            // lstUserStaff
-            // 
-            lstUserStaff.Anchor = AnchorStyles.Right;
-            lstUserStaff.FormattingEnabled = true;
-            lstUserStaff.Location = new Point(182, 109);
-            lstUserStaff.Margin = new Padding(4);
-            lstUserStaff.Name = "lstUserStaff";
-            lstUserStaff.Size = new Size(206, 36);
-            lstUserStaff.TabIndex = 0;
             // 
             // btnCreateCookbook
             // 
@@ -71,6 +61,16 @@
             btnCreateCookbook.TabIndex = 1;
             btnCreateCookbook.Text = "Create a Cookbook";
             btnCreateCookbook.UseVisualStyleBackColor = true;
+            // 
+            // lstUserStaff
+            // 
+            lstUserStaff.Anchor = AnchorStyles.Right;
+            lstUserStaff.FormattingEnabled = true;
+            lstUserStaff.Location = new Point(182, 109);
+            lstUserStaff.Margin = new Padding(4);
+            lstUserStaff.Name = "lstUserStaff";
+            lstUserStaff.Size = new Size(206, 36);
+            lstUserStaff.TabIndex = 0;
             // 
             // frmAutoCreateCookbook
             // 

@@ -12,7 +12,7 @@ as
 begin
 	declare @Return int = 0
 
-	select @RecipeId = isnull(@RecipeId, 0), @DateDrafted = isnull(@DateDrafted, getdate())
+	select @RecipeId = isnull(@RecipeId, 0), @DateDrafted = isnull(@DateDrafted, convert(varchar, getdate(), 101))
 	
 	if @RecipeId = 0
 	begin 

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            lstRecipe = new ComboBox();
             btnClone = new Button();
+            lstRecipe = new ComboBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -39,8 +39,8 @@
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 59.61039F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40.38961F));
-            tableLayoutPanel1.Controls.Add(lstRecipe, 0, 0);
             tableLayoutPanel1.Controls.Add(btnClone, 0, 1);
+            tableLayoutPanel1.Controls.Add(lstRecipe, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(4);
@@ -51,26 +51,26 @@
             tableLayoutPanel1.Size = new Size(770, 338);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // lstRecipe
-            // 
-            lstRecipe.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lstRecipe.FormattingEnabled = true;
-            lstRecipe.Location = new Point(164, 88);
-            lstRecipe.Margin = new Padding(3, 3, 3, 25);
-            lstRecipe.Name = "lstRecipe";
-            lstRecipe.Size = new Size(292, 36);
-            lstRecipe.TabIndex = 0;
-            // 
             // btnClone
             // 
             btnClone.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnClone.AutoSize = true;
-            btnClone.Location = new Point(362, 144);
+            btnClone.Location = new Point(228, 144);
             btnClone.Name = "btnClone";
-            btnClone.Size = new Size(94, 38);
+            btnClone.Size = new Size(228, 38);
             btnClone.TabIndex = 1;
             btnClone.Text = "Clone";
             btnClone.UseVisualStyleBackColor = true;
+            // 
+            // lstRecipe
+            // 
+            lstRecipe.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lstRecipe.FormattingEnabled = true;
+            lstRecipe.Location = new Point(177, 88);
+            lstRecipe.Margin = new Padding(3, 3, 3, 25);
+            lstRecipe.Name = "lstRecipe";
+            lstRecipe.Size = new Size(279, 36);
+            lstRecipe.TabIndex = 0;
             // 
             // frmCloneRecipe
             // 

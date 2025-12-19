@@ -10,7 +10,7 @@ as
 begin 
 	declare @Return int = 0
 
-	select @CookbookId = isnull(@CookbookId, 0)
+	select @CookbookId = isnull(@CookbookId, 0), @DateCreated = isnull(@DateCreated, convert(varchar, getdate(), 101))
 
 	if @CookbookId = 0
 	begin 
@@ -32,5 +32,3 @@ begin
 		where CookbookId = @CookbookId
 	end
 end
-
-select * from Cookbook

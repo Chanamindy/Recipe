@@ -21,14 +21,25 @@
 
         private void CloneRecipe()
         {
-            int recipeid = WindowsFormsUtility.GetIdFromComboBox(lstRecipe);
-            DataTable dtnew = Recipe.CloneRecipe(recipeid);
-            int clonerecipeid = (int)dtnew.Rows[0]["RecipeId"];
-            
-            if (this.MdiParent != null && this.MdiParent is frmMain)
+            try
             {
-                ((frmMain)this.MdiParent).OpenForm(typeof(frmRecipeDetail), clonerecipeid);
-                this.Close();
+                int recipeid = WindowsFormsUtility.GetIdFromComboBox(lstRecipe);
+                DataTable dtnew = Recipe.CloneRecipe(recipeid);
+                int clonerecipeid = (int)dtnew.Rows[0]["RecipeId"];
+                if (this.MdiParent != null && this.MdiParent is frmMain)
+                {
+                    ((frmMain)this.MdiParent).OpenForm(typeof(frmRecipeDetail), clonerecipeid);
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = "";
+                if (ex.Message == "Recipe Name must be unique.")
+                {
+                    message = "There is already a cloned recipe for this recipe.";
+                }
+                MessageBox.Show(message, Application.ProductName);
             }
         }
 

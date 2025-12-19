@@ -44,9 +44,10 @@
             // 
             // tblMain
             // 
+            tblMain.AutoSize = true;
             tblMain.ColumnCount = 2;
-            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tblMain.ColumnStyles.Add(new ColumnStyle());
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tblMain.Controls.Add(btnSave, 0, 0);
             tblMain.Controls.Add(pnlRadioButtons, 0, 1);
             tblMain.Controls.Add(gDataMaintenance, 1, 1);
@@ -61,6 +62,7 @@
             // 
             // btnSave
             // 
+            btnSave.AutoSize = true;
             btnSave.Dock = DockStyle.Fill;
             btnSave.Location = new Point(3, 3);
             btnSave.Name = "btnSave";
@@ -71,14 +73,16 @@
             // 
             // pnlRadioButtons
             // 
+            pnlRadioButtons.AutoSize = true;
             pnlRadioButtons.Controls.Add(optUsers);
             pnlRadioButtons.Controls.Add(optCuisines);
             pnlRadioButtons.Controls.Add(optIngredients);
             pnlRadioButtons.Controls.Add(optMeasurements);
             pnlRadioButtons.Controls.Add(optCourses);
+            pnlRadioButtons.Dock = DockStyle.Fill;
             pnlRadioButtons.Location = new Point(3, 83);
             pnlRadioButtons.Name = "pnlRadioButtons";
-            pnlRadioButtons.Size = new Size(214, 454);
+            pnlRadioButtons.Size = new Size(214, 544);
             pnlRadioButtons.TabIndex = 1;
             // 
             // optUsers
@@ -140,6 +144,8 @@
             // 
             // gDataMaintenance
             // 
+            gDataMaintenance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            gDataMaintenance.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             gDataMaintenance.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gDataMaintenance.Dock = DockStyle.Fill;
             gDataMaintenance.Location = new Point(223, 83);
@@ -159,10 +165,12 @@
             Name = "frmDataMaintenance";
             Text = "Data Maintenance";
             tblMain.ResumeLayout(false);
+            tblMain.PerformLayout();
             pnlRadioButtons.ResumeLayout(false);
             pnlRadioButtons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gDataMaintenance).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

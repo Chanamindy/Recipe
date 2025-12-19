@@ -24,7 +24,7 @@
             OpenForm(typeof(frmDashboard));
         }
 
-        public void OpenForm(Type frmtype, int pkvalue = 0)
+        public void OpenForm(Type frmtype, int pkvalue = 0, string var = "")
         {
             bool b = WindowsFormsUtility.IsFormOpen(frmtype);
             if (b == false)
@@ -76,6 +76,12 @@
                     frmCookbookDetail f = new();
                     newfrm = f;
                     f.ShowForm(pkvalue);
+                }
+                else if (frmtype == typeof(frmChangeStatus))
+                {
+                    frmChangeStatus f = new();
+                    newfrm = f;
+                    f.OpenForm(pkvalue, var);
                 }
                 if (newfrm != null)
                 {

@@ -38,7 +38,10 @@
 
         private void GCookbookList_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
-            OpenForm(e.RowIndex);
+            if (e.RowIndex >= 0)
+            {
+                OpenForm(e.RowIndex);
+            }
         }
 
         private void BtnNewCookbook_Click(object? sender, EventArgs e)

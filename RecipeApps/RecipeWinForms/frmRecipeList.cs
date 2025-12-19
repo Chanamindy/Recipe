@@ -24,7 +24,6 @@
             dtRecipe = Recipe.RecipeListSummaryGet();
             gRecipeList.DataSource = dtRecipe;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipeList, "Recipe");
-            //gRecipeList.Show();
         }
 
         private void ShowRecipeDetailsForm(int rowindex)
@@ -51,7 +50,10 @@
 
         private void GRecipeList_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
-            ShowRecipeDetailsForm(e.RowIndex);
+            if (e.RowIndex >= 0)
+            {
+                ShowRecipeDetailsForm(e.RowIndex);
+            }
         }
 
         private void BtnNewRecipe_Click(object? sender, EventArgs e)

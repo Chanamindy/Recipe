@@ -1,4 +1,7 @@
-﻿namespace RecipeWinForms
+﻿using RecipeSystem;
+using System.Windows.Forms;
+
+namespace RecipeWinForms
 {
     public partial class frmDashboard : Form
     {
@@ -16,7 +19,9 @@
             SqlCommand cmd = SQLUtility.GetSqlCommand("DashboardSummaryGet");
             DataTable dt = SQLUtility.GetDataTable(cmd);
             gMain.DataSource = dt;
+            gMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             WindowsFormsUtility.FormatGridForSearchResults(gMain, null);
+            gMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void ShowForm(Type frmtype, int pkvalue = 0)

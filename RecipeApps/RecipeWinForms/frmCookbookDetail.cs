@@ -1,4 +1,6 @@
-﻿namespace RecipeWinForms
+﻿using RecipeSystem;
+
+namespace RecipeWinForms
 {
     public partial class frmCookbookDetail : Form
     {
@@ -18,6 +20,7 @@
             btnSaveCookbook.Click += BtnSaveCookbook_Click;
             btnDelete.Click += BtnDelete_Click;
             gRecipe.CellContentClick += GRecipe_CellContentClick;
+            txtCookbookPrice.TextChanged += TxtCookbookPrice_TextChanged;
             this.Shown += FrmCookbookDetail_Shown;
             this.FormClosing += FrmCookbookDetail_FormClosing;
         }
@@ -42,7 +45,7 @@
             WindowsFormsUtility.SetControlBinding(txtCookbookName, bindsource);
             WindowsFormsUtility.SetListBinding(lstUserName, dtUser, dtCookbook, "UserStaff");
             WindowsFormsUtility.SetControlBinding(txtCookbookPrice, bindsource);
-            WindowsFormsUtility.SetControlBinding(dtpDateCreated, bindsource);
+            WindowsFormsUtility.SetControlBinding(lblDateCreated, bindsource);
             WindowsFormsUtility.SetControlBinding(chkCookbookStatus, bindsource);
             this.Text = GetCookbookDesc();
             this.Shown += FrmCookbookDetail_Shown;
@@ -54,7 +57,7 @@
             dtCookbookRecipe = Cookbook.LoadCookbookRecipesById(cookbookid);
             gRecipe.Columns.Clear();
             gRecipe.DataSource = dtCookbookRecipe;
-            dtRecipe = Cookbook.GetRecipeList(true);
+            dtRecipe = Cookbook.GetRecipeList();
             WindowsFormsUtility.AddComboBoxToGrid(gRecipe, dtRecipe, "Recipe", "RecipeName");
             WindowsFormsUtility.AddDeleteButtonToGrid(gRecipe, deletecolname);
             WindowsFormsUtility.FormatGridForEdit(gRecipe, "CookbookRecipe");
@@ -63,11 +66,11 @@
 
         private string GetCookbookDesc()
         {
-            string value = "New Cookbook";
+            string value = "Cookbook - New Cookbook";
             int pkvalue = SQLUtility.GetValueFromFirstRowAsInt(dtCookbook, "CookbookId");
             if (pkvalue > 0)
             {
-                value = SQLUtility.GetValueFromFirstRowAsString(dtCookbook, "CookbookName");
+                value = "Cookbook - " + SQLUtility.GetValueFromFirstRowAsString(dtCookbook, "CookbookName");
             }
             return value;
         }
@@ -142,6 +145,8 @@
                 bindsource.ResetBindings(false);
                 cookbookid = (int)dtCookbook.Rows[0]["CookbookId"];
                 this.Tag = cookbookid;
+                dtCookbook = Cookbook.LoadCookbookById(cookbookid);
+                bindsource.DataSource = dtCookbook;
                 SetSetButtonsEnabledBasedOnNewRecord();
                 this.Text = GetCookbookDesc();
             }
@@ -179,6 +184,20 @@
                 Application.UseWaitCursor = false;
             }
             return b;
+        }
+
+
+        private void TxtCookbookPrice_TextChanged(object? sender, EventArgs e)
+        {
+            string CookbookPrice = txtCookbookPrice.Text;
+            if (txtCookbookPrice.Text != "")
+            {
+                bool b = WindowsFormsUtility.CheckCharacterIfDecimal(CookbookPrice);
+                if (b == false)
+                {
+                    MessageBox.Show("The Cookbook price must be an interger.");
+                }
+            }
         }
 
         private void FrmCookbookDetail_FormClosing(object? sender, FormClosingEventArgs e)
@@ -226,7 +245,18 @@
 
         private void GRecipe_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
-            DeleteCookbookRecipe(e.RowIndex);
+            if (e.RowIndex >= 0)
+            {
+                int n = gRecipe.Columns.Count - 1;
+                if (e.ColumnIndex == n)
+                {
+                    int id = WindowsFormsUtility.GetIdFromGrid(gRecipe, e.RowIndex, "CookbookRecipeId");
+                    if (id >= 1)
+                    {
+                        DeleteCookbookRecipe(e.RowIndex);
+                    }
+                }
+            }
         }
         private void BtnDelete_Click(object? sender, EventArgs e)
         {

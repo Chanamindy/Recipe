@@ -9,6 +9,5 @@ begin
 	union select 0, ' ', ' ', ' ', ' '
 	where @IncludeBlank = 1
 	order by us.UserStaffId
-	
 end
 go

@@ -1,6 +1,4 @@
-﻿using System.Data.SqlClient;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmChangeStatus : Form
     {
@@ -8,8 +6,6 @@ namespace RecipeWinForms
         BindingSource bindsource = new();
         int recipeid;
         string recipestatus;
-        private enum RecipeStatusEnum { Drafted, Published, Archived };
-        RecipeStatusEnum currentstatus = RecipeStatusEnum.Drafted;
         
         public frmChangeStatus()
         {
@@ -17,6 +13,15 @@ namespace RecipeWinForms
             btnDraft.Click += BtnDraft_Click;
             btnPublish.Click += BtnPublish_Click;
             btnArchive.Click += BtnArchive_Click;
+            this.FormClosing += FrmChangeStatus_FormClosing;
+        }
+
+        private void FrmChangeStatus_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (this.MdiParent != null && this.MdiParent is frmMain)
+            {
+                ((frmMain)this.MdiParent).OpenForm(typeof(frmRecipeDetail), recipeid);
+            }
         }
 
         public void OpenForm(int RecipeId, string RecipeStatus)
@@ -35,10 +40,10 @@ namespace RecipeWinForms
             WindowsFormsUtility.SetControlBinding(lblDateDrafted, bindsource);
             WindowsFormsUtility.SetControlBinding(lblDatePublished, bindsource);
             WindowsFormsUtility.SetControlBinding(lblDateArchived, bindsource);
-            EnableDisableButtons();
+            EnableDisableButtons(recipestatus);
         }
 
-        private void ChangeRecipeStatus(int recipeid, string newstatus)
+        private void ChangeRecipeStatus(int recipeid, string recipestatus, string newstatus)
         {
             try
             {
@@ -49,11 +54,11 @@ namespace RecipeWinForms
                 }
                 else
                 {
-                    Recipe.ChangeRecipeStatus(recipeid, newstatus);
+                    Recipe.ChangeRecipeStatus(recipeid, recipestatus, newstatus);
                     dtRecipe = Recipe.Load(recipeid);
                     recipestatus = dtRecipe.Rows[0]["RecipeStatus"].ToString();
                     bindsource.DataSource = dtRecipe;
-                    EnableDisableButtons();
+                    EnableDisableButtons(recipestatus);
                 }
             }
             catch (Exception ex)
@@ -62,7 +67,7 @@ namespace RecipeWinForms
             }
         }
 
-        private void EnableDisableButtons()
+        private void EnableDisableButtons(string recipestatus)
         {
             bool bdrafted = recipestatus == "Drafted" ? false : true;
             bool bpublished = recipestatus == "Published" ? false : true;
@@ -74,17 +79,17 @@ namespace RecipeWinForms
 
         private void BtnArchive_Click(object? sender, EventArgs e)
         {
-            ChangeRecipeStatus(recipeid, "Archive");
+            ChangeRecipeStatus(recipeid, recipestatus, "Archive");
         }
 
         private void BtnPublish_Click(object? sender, EventArgs e)
         {
-            ChangeRecipeStatus(recipeid, "Publish");
+            ChangeRecipeStatus(recipeid, recipestatus, "Publish");
         }
 
         private void BtnDraft_Click(object? sender, EventArgs e)
         {
-            ChangeRecipeStatus(recipeid, "Draft");
+            ChangeRecipeStatus(recipeid, recipestatus, "Draft");
         }
     }
 }

@@ -96,10 +96,11 @@ namespace RecipeSystem
             SQLUtility.ExecuteSQL(cmd);
         }
 
-        public static void ChangeRecipeStatus(int recipeid, string newstatus)
+        public static void ChangeRecipeStatus(int recipeid, string recipestatus, string newstatus)
         {
             SqlCommand cmd = SQLUtility.GetSqlCommand("ChangeRecipeStatus");
             SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
+            SQLUtility.SetParamValue(cmd, "@RecipeStatus", recipestatus);
             SQLUtility.SetParamValue(cmd, "@NewRecipeStatus", newstatus);
             SQLUtility.ExecuteSQL(cmd);
         }

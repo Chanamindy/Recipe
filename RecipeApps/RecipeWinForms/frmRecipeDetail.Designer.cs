@@ -141,10 +141,11 @@
             // 
             // lstUserName
             // 
+            lstUserName.Dock = DockStyle.Fill;
             lstUserName.FormattingEnabled = true;
             lstUserName.Location = new Point(275, 93);
             lstUserName.Name = "lstUserName";
-            lstUserName.Size = new Size(231, 36);
+            lstUserName.Size = new Size(430, 36);
             lstUserName.TabIndex = 12;
             // 
             // lblCaptionCuisineType
@@ -160,10 +161,11 @@
             // 
             // lstCuisineType
             // 
+            lstCuisineType.Dock = DockStyle.Fill;
             lstCuisineType.FormattingEnabled = true;
             lstCuisineType.Location = new Point(275, 135);
             lstCuisineType.Name = "lstCuisineType";
-            lstCuisineType.Size = new Size(231, 36);
+            lstCuisineType.Size = new Size(430, 36);
             lstCuisineType.TabIndex = 14;
             // 
             // lblCaptionCalorie
@@ -356,10 +358,10 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(tblRecipeDirection);
-            tabPage2.Location = new Point(4, 37);
+            tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(694, 309);
+            tabPage2.Size = new Size(694, 355);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;
@@ -376,17 +378,17 @@
             tblRecipeDirection.RowCount = 2;
             tblRecipeDirection.RowStyles.Add(new RowStyle(SizeType.Percent, 15.5629139F));
             tblRecipeDirection.RowStyles.Add(new RowStyle(SizeType.Percent, 84.43709F));
-            tblRecipeDirection.Size = new Size(688, 303);
+            tblRecipeDirection.Size = new Size(688, 349);
             tblRecipeDirection.TabIndex = 0;
             // 
             // gRecipeDirection
             // 
             gRecipeDirection.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gRecipeDirection.Dock = DockStyle.Fill;
-            gRecipeDirection.Location = new Point(3, 50);
+            gRecipeDirection.Location = new Point(3, 57);
             gRecipeDirection.Name = "gRecipeDirection";
             gRecipeDirection.RowHeadersWidth = 51;
-            gRecipeDirection.Size = new Size(682, 250);
+            gRecipeDirection.Size = new Size(682, 289);
             gRecipeDirection.TabIndex = 33;
             // 
             // btnSaveRecipeDirection

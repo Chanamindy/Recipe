@@ -27,7 +27,10 @@ namespace RecipeSystem
         {
             SqlCommand cmd = SQLUtility.GetSqlCommand("UserNameGet");
             SQLUtility.SetParamValue(cmd, "@All", 1);
-            SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
+            if (includeblank == true)
+            {
+                SQLUtility.SetParamValue(cmd, "@IncludeBlank", 1);
+            }
             DataTable dtUser = SQLUtility.GetDataTable(cmd);
             return dtUser;
         }
