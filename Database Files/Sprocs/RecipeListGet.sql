@@ -1,3 +1,4 @@
+--AS Try to combine with RecipeGet
 create or alter proc dbo.RecipeListSummaryGet(
 	@Message varchar(500) = '' output
 )

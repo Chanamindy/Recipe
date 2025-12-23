@@ -1,3 +1,4 @@
+--AS Try to combine with CookbookListGet
 create or alter proc dbo.CookbookListSummaryGet(
 	@CookbookId int = 0,
 	@All bit = 0,
