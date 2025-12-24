@@ -1,4 +1,6 @@
-﻿namespace RecipeWinForms
+﻿using System.Data.Common;
+
+namespace RecipeWinForms
 {
     public partial class frmDataMaintenance : Form
     {
@@ -19,6 +21,7 @@
             optMeasurements.Click += Opt_Click;
             optCourses.Click += Opt_Click;
             gDataMaintenance.CellContentClick += GDataMaintenance_CellContentClick;
+            gDataMaintenance.DataError += GDataMaintenance_DataError;
             btnSave.Click += BtnSave_Click;
         }
 
@@ -136,6 +139,16 @@
             if (gDataMaintenance.Columns[e.ColumnIndex].Name == deletecolname)
             {
                 Delete(e.RowIndex);
+            }
+        }
+
+        private void GDataMaintenance_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            string columnname = gDataMaintenance.Columns[e.ColumnIndex].Name;
+            bool b = SQLUtility.CheckValueIfInt(sender.ToString());
+            if (sender.ToString() != "" && b == false)
+            {
+                MessageBox.Show(columnname + " must be an interger.");
             }
         }
     }

@@ -1,4 +1,4 @@
-create or alter proc dbo.UserUpdate(
+create or alter proc dbo.UserStaffUpdate(
 	@UserStaffId int = 0 output,
 	@UserFirstName varchar(30) = '',
 	@UserLastName varchar(30) = '',

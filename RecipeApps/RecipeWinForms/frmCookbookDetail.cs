@@ -21,6 +21,7 @@ namespace RecipeWinForms
             btnDelete.Click += BtnDelete_Click;
             gRecipe.CellContentClick += GRecipe_CellContentClick;
             txtCookbookPrice.TextChanged += TxtCookbookPrice_TextChanged;
+            gRecipe.DataError += GRecipe_DataError;
             this.Shown += FrmCookbookDetail_Shown;
             this.FormClosing += FrmCookbookDetail_FormClosing;
         }
@@ -87,6 +88,12 @@ namespace RecipeWinForms
             int id = WindowsFormsUtility.GetIdFromGrid(gRecipe, rowIndex, "CookbookRecipeId");
             if (id > 0)
             {
+                var result = MessageBox.Show("Are you sure you want to delete this Recipe?", "CookbookRecipe", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+                Application.UseWaitCursor = true;
                 try
                 {
                     CookbookRecipe.Delete(id);
@@ -96,9 +103,14 @@ namespace RecipeWinForms
                 {
                     MessageBox.Show(ex.Message, Application.ProductName);
                 }
+                finally
+                {
+                    Application.UseWaitCursor = false;
+                }
             }
-            else if (id < gRecipe.Rows.Count)
+            else 
             {
+                if (id < gRecipe.Rows.Count)
                 gRecipe.Rows.RemoveAt(rowIndex);
             }
         }
@@ -186,17 +198,30 @@ namespace RecipeWinForms
             return b;
         }
 
+        private void MessageValueMustBeAnInt(bool b, string columnname)
+        {
+            if (b == false)
+            {
+                MessageBox.Show(columnname + " must be an interger.");
+            }
+        }
+
+        private void GRecipe_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            string columnname = gRecipe.Columns[e.ColumnIndex].Name;
+            if (sender.ToString() != "")
+            {
+                bool b = SQLUtility.CheckValueIfInt(sender.ToString());
+                MessageValueMustBeAnInt(b, columnname);
+            }
+        }
 
         private void TxtCookbookPrice_TextChanged(object? sender, EventArgs e)
         {
-            string CookbookPrice = txtCookbookPrice.Text;
             if (txtCookbookPrice.Text != "")
             {
-                bool b = WindowsFormsUtility.CheckCharacterIfDecimal(CookbookPrice);
-                if (b == false)
-                {
-                    MessageBox.Show("The Cookbook price must be an interger.");
-                }
+                bool b = SQLUtility.CheckValueIfInt(txtCookbookPrice.Text);
+                MessageValueMustBeAnInt(b, "CookbookPrice");
             }
         }
 
@@ -247,14 +272,10 @@ namespace RecipeWinForms
         {
             if (e.RowIndex >= 0)
             {
-                int n = gRecipe.Columns.Count - 1;
-                if (e.ColumnIndex == n)
+                int id = WindowsFormsUtility.GetIdFromGrid(gRecipe, e.RowIndex, "CookbookRecipeId");
+                if (id > 0)
                 {
-                    int id = WindowsFormsUtility.GetIdFromGrid(gRecipe, e.RowIndex, "CookbookRecipeId");
-                    if (id >= 1)
-                    {
-                        DeleteCookbookRecipe(e.RowIndex);
-                    }
+                    DeleteCookbookRecipe(e.RowIndex);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Data.Common;
+using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -26,13 +27,9 @@ namespace RecipeWinForms
             gRecipeIngredient.CellContentClick += GRecipeIngredient_CellContentClick;
             gRecipeDirection.CellContentClick += GRecipeDirection_CellContentClick;
             txtCalorie.TextChanged += TxtCalorie_TextChanged;
-            gRecipeIngredient.TabIndexChanged += GRecipeIngredient_TabIndexChanged;///
+            gRecipeIngredient.DataError += GRecipeIngredient_DataError;
+            gRecipeDirection.DataError += GRecipeDirection_DataError;
             this.Shown += FrmRecipeDetail_Shown;
-        }
-
-        private void GRecipeIngredient_TabIndexChanged(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void FrmRecipeDetail_Shown(object? sender, EventArgs e)
@@ -74,7 +71,6 @@ namespace RecipeWinForms
             dtRecipeDirection = RecipeDirection.LoadRecipeDirectionById(recipeid);
             gRecipeDirection.DataSource = dtRecipeDirection;
             WindowsFormsUtility.AddDeleteButtonToGrid(gRecipeDirection, deletecolname);
-            //List<DataGridViewButtonColumn> lst = gRecipeDirection.Columns.[4];
             tabPage2.Text = "Steps";
             gRecipeDirection.Show();
             WindowsFormsUtility.FormatGridForEdit(gRecipeDirection, "RecipeDirection");
@@ -341,31 +337,50 @@ namespace RecipeWinForms
             btnSaveRecipeDirection.Enabled = b;
         }
 
-        private void CheckValueIfInt(string text)
+        private void MessageValueMustBeAnInt(bool b, string columnname)
         {
-            if (text != "")
+            if (b == false)
             {
-                bool b = WindowsFormsUtility.CheckCharacterIfNum(text);
-                if (b == false)
-                {
-                    MessageBox.Show("Calorie must be an interger.");
-                }
+                MessageBox.Show(columnname + " must be an interger.");
+            }
+        }
+
+        private void GRecipeDirection_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            string columnname = gRecipeDirection.Columns[e.ColumnIndex].Name;
+            if (sender.ToString() != "")
+            {
+                bool b = SQLUtility.CheckValueIfInt(sender.ToString());
+                MessageValueMustBeAnInt(b, columnname);
+            }
+        }
+
+        private void GRecipeIngredient_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            string columnname = gRecipeIngredient.Columns[e.ColumnIndex].Name;
+            if (sender.ToString() != "")
+            {
+                bool b = SQLUtility.CheckValueIfInt(sender.ToString());
+                MessageValueMustBeAnInt(b, columnname);
             }
         }
 
         private void TxtCalorie_TextChanged(object? sender, EventArgs e)
         {
-            CheckValueIfInt(txtCalorie.Text);
+            if (txtCalorie.Text != "")
+            {
+                bool b = SQLUtility.CheckValueIfInt(txtCalorie.Text);
+                MessageValueMustBeAnInt(b, "Calorie");
+            }
         }
 
         private void GRecipeDirection_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                int n = gRecipeDirection.Columns.Count - 1;
-                if (e.ColumnIndex == n)
+                int id = WindowsFormsUtility.GetIdFromGrid(gRecipeDirection, e.RowIndex, "RecipeDirectionId");
+                if (id > 0)
                 {
-                    int id = WindowsFormsUtility.GetIdFromGrid(gRecipeDirection, e.RowIndex, "RecipeDirectionId");
                     DeleteRecipeDirection(e.RowIndex);
                 }
             }
@@ -373,27 +388,11 @@ namespace RecipeWinForms
 
         private void GRecipeIngredient_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
-            //Button btn = (Button)(gRecipeIngredient.Rows[e.RowIndex].Cells[gRecipeIngredient.Columns.Count - 1]);                
             if (e.RowIndex >= 0)
             {
-
-                //lstbtn.Add
-                //
-                //foreach (Button btn in gRecipeIngredient.Columns["Delete"])
-                //{
-                //
-                //}
-
-                //////////////private void GRecipeDirection_CellContentClick(object? sender, DataGridViewCellEventArgs e)
-                //////////////{
-                //////////////    int id = WindowsFormsUtility.GetIdFromGrid(gRecipeDirection, e.RowIndex, "RecipeDirectionId");
-                //////////////    DeleteRecipeDirection(e.RowIndex);
-                //////////////}
-
-                int n = gRecipeIngredient.Columns.Count - 1;
-                if (e.ColumnIndex == n)
+                int id = WindowsFormsUtility.GetIdFromGrid(gRecipeIngredient, e.RowIndex, "RecipeIngredientId");
+                if (id > 0)
                 {
-                    int id = WindowsFormsUtility.GetIdFromGrid(gRecipeIngredient, e.RowIndex, "RecipeIngredientId");
                     DeleteRecipeIngredient(e.RowIndex);
                 }
             }
