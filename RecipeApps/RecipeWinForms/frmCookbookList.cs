@@ -18,9 +18,12 @@
 
         private void BindData()
         {
-            DataTable dt = Cookbook.CookbookListSummaryGet();
+            DataTable dt = Cookbook.CookbookListGet();
             gCookbookList.DataSource = dt;
             WindowsFormsUtility.FormatGridForSearchResults(gCookbookList, "Cookbook");
+            gCookbookList.Columns["CookbookStatus"].Visible = false;
+            gCookbookList.Columns["DateCreated"].Visible = false;
+            gCookbookList.Columns["CookbookPictureCode"].Visible = false;
         }
 
         private void OpenForm(int rowindex)

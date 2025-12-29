@@ -43,9 +43,9 @@ namespace RecipeSystem
             return dt;
         }
 
-        public static DataTable CookbookListSummaryGet()
+        public static DataTable CookbookListGet()
         {
-            SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookListSummaryGet");
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookListGet");
             SQLUtility.SetParamValue(cmd, "@All", 1);
             DataTable dt = SQLUtility.GetDataTable(cmd);
             return dt;
