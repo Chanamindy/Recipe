@@ -12,7 +12,7 @@ begin
         select @Return = 1, @Message = 'Cannot delete recipe because the recipe is published or has not been archived for more than 30 days.'
 =======
 --AS Message is incorrect, should say OR isntead of AND
-        select @Return = 1, @Message = 'Cannot delete recipe because the recipe is published and has not been archived for more than 30 days.'
+        select @Return = 1, @Message = 'Cannot delete recipe because the recipe is published or has not been archived for more than 30 days.'
 >>>>>>> 71bc9341c35b6488b6a50ef46e3d3ab1e98b5f4f
         goto finished 
     end 
