@@ -43,7 +43,7 @@ namespace RecipeWinForms
             id = WindowsFormsUtility.GetIdFromGrid(gDataMaintenance, rowindex, currenttabletype.ToString() + "Id");
             if (id != 0)
             {
-                string message = "Do you want to Delete this " + currenttabletype.ToString() + "?";
+                string message = "Do you want to Delete this " + currenttabletype.ToString() + " and all related records?";
                 if (currenttabletype == TableTypeEnum.UserStaff)
                 {
                     message = "Are you sure you want to delete this user and all related recipes, meals, and cookbooks?";

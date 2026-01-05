@@ -26,12 +26,11 @@ namespace RecipeSystem
             return dt;
         }
 
-        public static DataTable RecipeListGet(bool all = false, bool summary = false, int recipeid = 0)
+        public static DataTable RecipeListGet(bool all = false, int recipeid = 0)
         {
             SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
             SQLUtility.SetParamValue(cmd, "@All", all);
             SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
-            SQLUtility.SetParamValue(cmd, "@Summary", summary);
             DataTable dt = SQLUtility.GetDataTable(cmd);
             return dt;
         }

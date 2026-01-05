@@ -4,6 +4,12 @@ create or alter proc dbo.IngredientDelete(
 )
 as 
 begin
+	delete ri
+	from RecipeIngredient ri 
+	join Ingredient i
+	on ri.IngredientId = i.IngredientId
+	where ri.IngredientId = @IngredientId
+	
 	delete Ingredient where IngredientId = @IngredientId
 end
 go

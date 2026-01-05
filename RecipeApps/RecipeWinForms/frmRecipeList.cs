@@ -21,7 +21,7 @@
 
         public void BindData()
         {
-            dtRecipe = Recipe.RecipeListGet(true, true);
+            dtRecipe = Recipe.RecipeListGet(true);
             gRecipeList.DataSource = dtRecipe;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipeList, "Recipe");
             gRecipeList.Columns["DateDrafted"].Visible = false;
