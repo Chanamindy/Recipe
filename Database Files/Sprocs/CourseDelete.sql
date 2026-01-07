@@ -4,6 +4,14 @@ create or alter proc dbo.CourseDelete(
 )
 as 
 begin
+	delete mcr
+	from MealCourseRecipe mcr
+	join MealCourse mc
+	on mcr.MealCourseId = mc.MealCourseId
+	join Course c
+	on mc.CourseId = c.CourseId
+	where mc.CourseId = @CourseId
+
 	delete mc
 	from MealCourse mc 
 	join Course c
